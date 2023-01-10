@@ -1,0 +1,12 @@
+[package]
+name = "websocket-chat-react-rust"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[lib]
+
+[dependencies]
+shuttle-service = { version = "0.8.0", features = ["web-axum"] }
+axum = "0.6.2"
+sync_wrapper = "0.1.1"

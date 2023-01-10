@@ -1,0 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+
+  input, button {
+    box-shadow: 5px 5px rgba(0,0,0,0.5);
+  }
+
+  input:active, button:active {
+    box-shadow: 3px 3px rgba(0,0,0,0.5);
+  }
+}
+
+@font-face {
+  font-family: Roboto;
+  src: url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap');
+}
+
+body {
+  font-family: Roboto, 'Sans Serif';
+}
