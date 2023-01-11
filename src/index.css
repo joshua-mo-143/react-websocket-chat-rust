@@ -25,13 +25,14 @@ body {
   margin: 0;
   background-color: rgb(214 211 209);
   box-sizing: box-border;
+  overflow-x: hidden;
 }
 
 .chat-message:nth-child(2) {
   background: white;
-  
 }
 
 .chat-message {
   box-shadow: 5px 5px rgba(0,0,0,0.5);
 }
+

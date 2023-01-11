@@ -20,7 +20,7 @@ const NamePrompt = ({vis, name, setName, setVis}: Props) => {
 
   return (
     <AnimatePresence>
-    <motion.div className={vis ? 'visible transition-all flex flex-col justify-center items-center h-screen w-screen absolute backdrop-blur-xl' : "transition-all invisible flex flex-col justify-center items-center h-screen w-screen absolute backdrop-blur-xl"}
+    <motion.div className={vis ? ' transition-all flex flex-col justify-center items-center h-screen w-screen absolute backdrop-blur-xl' : "transition-all hidden flex flex-col justify-center items-center h-screen w-screen absolute backdrop-blur-xl"}
     initial={{opacity: 0}}
     animate={{opacity: 1}}
     exit={{opacity:0}}>
