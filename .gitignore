@@ -13,6 +13,7 @@ dist-ssr
 *.local
 
 # Editor directories and files
+.env
 .vscode/*
 !.vscode/extensions.json
 .idea
@@ -23,8 +24,9 @@ dist-ssr
 *.sln
 *.sw?
 
-
+out
 # Added by cargo
 
 /target
 /Cargo.lock
+target

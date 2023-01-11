@@ -14,11 +14,24 @@
   }
 }
 
-@font-face {
+/* @font-face {
   font-family: Roboto;
   src: url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap');
-}
+} */
 
 body {
   font-family: Roboto, 'Sans Serif';
+  padding: 0;
+  margin: 0;
+  background-color: rgb(214 211 209);
+  box-sizing: box-border;
+}
+
+.chat-message:nth-child(2) {
+  background: white;
+  
+}
+
+.chat-message {
+  box-shadow: 5px 5px rgba(0,0,0,0.5);
 }
