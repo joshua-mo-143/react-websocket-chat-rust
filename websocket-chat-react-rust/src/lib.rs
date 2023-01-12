@@ -41,20 +41,21 @@ struct Msg {
 
 #[shuttle_service::main]
 async fn main(
-    #[shuttle_secrets::Secrets] secrets: SecretStore
+    #[shuttle_secrets::Secrets] secrets: SecretStore,
+    #[shuttle_static_folder::StaticFolder] static_folder: PathBuf
 ) -> ShuttleAxum {
 
     // We use Secrets.toml to set the BEARER key, just like in a .env file and call it here
     let secret = secrets.get("BEARER").unwrap_or("Bear".to_string());
 
     // set up router with Secrets & use syncwrapper to make the web service work
-    let router = router(secret);
+    let router = router(secret, static_folder);
     let sync_wrapper = SyncWrapper::new(router);
 
     Ok(sync_wrapper)
 }
 
-fn router(secret: String) -> Router {
+fn router(secret: String, static_folder: PathBuf) -> Router {
     // initialise the Users k/v store and allow the static files to be served
     let users = Users::default();
 
@@ -63,7 +64,7 @@ fn router(secret: String) -> Router {
     .route("/disconnect/:user_id", get(disconnect_user))
     .layer(RequireAuthorizationLayer::bearer(&secret));
 
-    let static_assets = SpaRouter::new("/", "static").index_file("index.html");
+    let static_assets = SpaRouter::new("/", static_folder).index_file("index.html");
     // return a new router and nest the admin route into the websocket route
      Router::new()
         .route("/ws", get(ws_handler))
