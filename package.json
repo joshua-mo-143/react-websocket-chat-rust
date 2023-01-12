@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "concurrently new \"vite\" \"cargo shuttle run --working-directory ./websocket-chat-react-rust --port 9999\"",
     "build": "tsc && vite build --emptyOutDir",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "deploy": "npm run build && cargo shuttle deploy --working-directory ./websocket-chat-react-rust"
   },
   "dependencies": {
     "framer-motion": "^8.4.0",

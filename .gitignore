@@ -24,9 +24,13 @@ dist-ssr
 *.sln
 *.sw?
 
-out
+
 # Added by cargo
 
 /target
 /Cargo.lock
 target
+
+# Added for project
+out
+Secrets.toml
