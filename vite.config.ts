@@ -6,7 +6,7 @@ export default defineConfig({
   base: '',
   plugins: [react()],
   build: {
-    outDir: 'websocket-chat-react-rust/out',
+    outDir: 'websocket-chat-react-rust/static',
     emptyOutDir: true
   }
 })

@@ -17,7 +17,6 @@ use axum::{
 
 use futures::{SinkExt, StreamExt};
 use shuttle_secrets::SecretStore;
-use shuttle_static_folder;
 use shuttle_service::ShuttleAxum;
 use sync_wrapper::SyncWrapper;
 use tokio::{
@@ -41,7 +40,7 @@ struct Msg {
 
 #[shuttle_service::main]
 async fn main(
-    #[shuttle_static_folder::StaticFolder(folder = "out")] static_folder: PathBuf,
+    #[shuttle_static_folder::StaticFolder] static_folder: PathBuf,
     #[shuttle_secrets::Secrets] secrets: SecretStore
 ) -> ShuttleAxum {
 
