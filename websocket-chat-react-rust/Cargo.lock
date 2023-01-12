@@ -88,6 +88,25 @@ dependencies = [
 ]
 
 [[package]]
+name = "axum-extra"
+version = "0.4.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "f9a320103719de37b7b4da4c8eb629d4573f6bcfd3dfe80d3208806895ccf81d"
+dependencies = [
+ "axum",
+ "bytes",
+ "futures-util",
+ "http",
+ "mime",
+ "pin-project-lite",
+ "tokio",
+ "tower",
+ "tower-http",
+ "tower-layer",
+ "tower-service",
+]
+
+[[package]]
 name = "base64"
 version = "0.13.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1293,17 +1312,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "shuttle-static-folder"
-version = "0.8.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7514bca7dca0ad4cdd181e9a4fb5c2c3402cde9a20516a750a272bca936ac577"
-dependencies = [
- "async-trait",
- "shuttle-service",
- "tokio",
-]
-
-[[package]]
 name = "signal-hook-registry"
 version = "1.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1837,6 +1845,7 @@ name = "websocket-chat-react-rust"
 version = "0.1.0"
 dependencies = [
  "axum",
+ "axum-extra",
  "chrono",
  "futures",
  "hyper",
@@ -1845,7 +1854,6 @@ dependencies = [
  "serde_json",
  "shuttle-secrets",
  "shuttle-service",
- "shuttle-static-folder",
  "sync_wrapper",
  "tokio",
  "tower-http",

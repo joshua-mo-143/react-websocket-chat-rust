@@ -15,6 +15,7 @@ use axum::{
     Extension, Router,
 };
 
+use axum_extra::routing::SpaRouter;
 use futures::{SinkExt, StreamExt};
 use shuttle_secrets::SecretStore;
 use shuttle_service::ShuttleAxum;
@@ -40,7 +41,6 @@ struct Msg {
 
 #[shuttle_service::main]
 async fn main(
-    #[shuttle_static_folder::StaticFolder] static_folder: PathBuf,
     #[shuttle_secrets::Secrets] secrets: SecretStore
 ) -> ShuttleAxum {
 
@@ -48,28 +48,28 @@ async fn main(
     let secret = secrets.get("BEARER").unwrap_or("Bear".to_string());
 
     // set up router with Secrets & use syncwrapper to make the web service work
-    let router = router(secret, static_folder);
+    let router = router(secret);
     let sync_wrapper = SyncWrapper::new(router);
 
     Ok(sync_wrapper)
 }
 
-fn router(secret: String, static_folder: PathBuf) -> Router {
+fn router(secret: String) -> Router {
     // initialise the Users k/v store and allow the static files to be served
     let users = Users::default();
-    let directory = get_service(ServeDir::new(static_folder)).handle_error(handle_error);
 
     // make an admin route for kicking users
     let admin = Router::new()
     .route("/disconnect/:user_id", get(disconnect_user))
     .layer(RequireAuthorizationLayer::bearer(&secret));
 
+    let static_assets = SpaRouter::new("/", "static").index_file("index.html");
     // return a new router and nest the admin route into the websocket route
      Router::new()
+        .merge(static_assets)
         .route("/ws", get(ws_handler))
         .nest("/admin", admin)
         .layer(Extension(users))
-        .fallback_service(directory)
 }
 
 async fn ws_handler(ws: WebSocketUpgrade, Extension(state): Extension<Users>) -> impl IntoResponse {
