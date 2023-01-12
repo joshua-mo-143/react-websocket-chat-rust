@@ -66,10 +66,10 @@ fn router(secret: String) -> Router {
     let static_assets = SpaRouter::new("/", "static").index_file("index.html");
     // return a new router and nest the admin route into the websocket route
      Router::new()
-        .merge(static_assets)
         .route("/ws", get(ws_handler))
         .nest("/admin", admin)
         .layer(Extension(users))
+        .merge(static_assets)
 }
 
 async fn ws_handler(ws: WebSocketUpgrade, Extension(state): Extension<Users>) -> impl IntoResponse {
