@@ -11,7 +11,7 @@ use axum::{
     },
 
     response::{IntoResponse},
-    routing::{get, get_service},
+    routing::{get},
     Extension, Router,
 };
 
@@ -25,7 +25,7 @@ use tokio::{
 
 };
 use serde::{Deserialize, Serialize};
-use tower_http::{auth::RequireAuthorizationLayer, services::ServeDir};
+use tower_http::{auth::RequireAuthorizationLayer};
 
 // The list of users needs to be a hashmap that can be shared safely across threads, hence an Arc with RwLock
 type Users = Arc<RwLock<HashMap<usize, UnboundedSender<Message>>>>;
@@ -64,7 +64,8 @@ fn router(secret: String, static_folder: PathBuf) -> Router {
     .route("/disconnect/:user_id", get(disconnect_user))
     .layer(RequireAuthorizationLayer::bearer(&secret));
 
-    let static_assets = SpaRouter::new("/", static_folder).index_file("index.html");
+    let static_assets = SpaRouter::new("/", static_folder)
+        .index_file("index.html").handle_error(handle_error);
     // return a new router and nest the admin route into the websocket route
      Router::new()
         .route("/ws", get(ws_handler))
