@@ -64,16 +64,14 @@ fn router(secret: String, static_folder: PathBuf) -> Router {
     .route("/disconnect/:user_id", get(disconnect_user))
     .layer(RequireAuthorizationLayer::bearer(&secret));
 
-    let meme = ServeDir::new("static");
-
-    // let static_assets = SpaRouter::new("/", static_folder)
-    //     .index_file("index.html");
+    let static_assets = SpaRouter::new("/", static_folder)
+        .index_file("index.html");
     // return a new router and nest the admin route into the websocket route
      Router::new()
-        .nest("/public", get(meme))
         .route("/ws", get(ws_handler))
         .nest("/admin", admin)
         .layer(Extension(users))
+        .merge(static_assets)
 }
 
 async fn ws_handler(ws: WebSocketUpgrade, Extension(state): Extension<Users>) -> impl IntoResponse {

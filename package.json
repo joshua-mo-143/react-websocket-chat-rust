@@ -4,10 +4,10 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "concurrently new \"vite\" \"cargo shuttle run --working-directory ./websocket-chat-react-rust --port 9999\"",
+    "dev": "concurrently new \"vite\" \"cargo shuttle run --working-directory .API --port 9999\"",
     "build": "tsc && vite build --emptyOutDir",
     "preview": "vite preview",
-    "deploy": "npm run build && cargo shuttle deploy --working-directory ./websocket-chat-react-rust"
+    "deploy": "npm run build && cargo shuttle deploy --working-directory ./API"
   },
   "dependencies": {
     "framer-motion": "^8.4.0",
