@@ -11,7 +11,7 @@ use axum::{
     },
 
     response::{IntoResponse},
-    routing::{get, get_service},
+    routing::{get},
     Extension, Router,
 };
 
@@ -25,7 +25,7 @@ use tokio::{
 
 };
 use serde::{Deserialize, Serialize};
-use tower_http::{auth::RequireAuthorizationLayer, services::ServeDir};
+use tower_http::{auth::RequireAuthorizationLayer};
 
 // The list of users needs to be a hashmap that can be shared safely across threads, hence an Arc with RwLock
 type Users = Arc<RwLock<HashMap<usize, UnboundedSender<Message>>>>;

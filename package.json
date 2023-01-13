@@ -8,6 +8,7 @@
     "build": "tsc && vite build --emptyOutDir",
     "preview": "vite preview",
     "deploy": "npm run build && cargo shuttle deploy --working-directory ./API"
+  
   },
   "dependencies": {
     "framer-motion": "^8.4.0",
