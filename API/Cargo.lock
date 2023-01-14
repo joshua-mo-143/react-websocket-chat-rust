@@ -1852,7 +1852,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "1c38c045535d93ec4f0b4defec448e4291638ee608530863b1e2ba115d4fff7f"
 
 [[package]]
-name = "websocket-chat-react-rust"
+name = "websocket-chat-react-rust-00000000-0000-0000-0000-000000000000"
 version = "0.1.0"
 dependencies = [
  "axum",
