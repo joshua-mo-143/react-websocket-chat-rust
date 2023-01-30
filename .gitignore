@@ -32,5 +32,4 @@ dist-ssr
 target
 
 # Added for project
-static
 Secrets.toml
