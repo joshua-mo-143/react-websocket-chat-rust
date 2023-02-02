@@ -17,15 +17,20 @@ function App() {
 
     <>
       <NamePrompt vis={vis} name={name} setName={setName} setVis={setVis} />
-      <div className="flex flex-row">
-        <div className='w-full bg-stone-300 flex flex-col pb-5' >
+      <div className="flex flex-row text-gray-100">
+        <div className='w-full bg-slate-700 flex flex-col pb-5' >
           <div className='w-full min-h-screen flex flex-col justify-end gap-4 pb-20' id="chatbox">
+              <div className="mx-8 break-all chat-message bg-slate-600 rounded-xl rounded-xl w-fit inline-block px-5 py-4">
+                <p>Hi! Welcome to Rustcord. Enjoy your stay!</p>
+              </div>
           </div>
-          <form className='w-full h-10 fixed bottom-0 flex flex-row justify-center gap-4 mb-5 px-5' onSubmit={(e) => sendMessage(e,name, message, setMessage)}>
-            <input name="message" id="messageBox" type="text" className='w-4/5 py-2 px-5 rounded-xl' value={message}
+          <form className='w-full h-10 fixed bottom-0 flex flex-row mb-5 px-5' onSubmit={(e) => sendMessage(e,name, message, setMessage)}>
+            <input name="message" id="messageBox" type="text" className='bg-slate-400 w-full py-2 px-5 focus:outline-0 rounded-tl-xl rounded-bl-xl' value={message}
               placeholder="Enter your message here..."
               onInput={(e: React.ChangeEvent<HTMLInputElement>) => setMessage(e.target.value)} />
-            <button id="messageBtn" className='bg-blue-500 px-2 rounded-xl active:translate-y-0.5 active:translate-x-0.5 hover:bg-blue-300 transition-all'>Send Message</button>
+            <button id="messageBtn" className='bg-slate-400 px-2 active:translate-y-0.5 active:translate-x-0.5 hover:text-black transition-all rounded-tr-xl rounded-br-xl'>
+              Send
+            </button>
           </form>
         </div>
       </div></>
@@ -53,9 +58,11 @@ const sendMessage = (e: React.FormEvent<HTMLFormElement>, name: string, message:
 }
 
 // Set up the websocket URL. 
-const wsUri = ((window.location.protocol == "https:" && "wss://") || "ws://") +
-  window.location.host +
-  "/ws";
+// const wsUri = ((window.location.protocol == "https:" && "wss://") || "ws://") +
+//   window.location.host +
+//   "/ws";
+
+const wsUri = "ws://localhost:9999/ws"
 
 const websocket = new WebSocket(wsUri);
 
@@ -76,14 +83,19 @@ websocket.onmessage = (ev) => {
 }
 
 // store the message classes as an array
-const message_classes = ['mx-16', 'break-words', 'bg-stone-400', 'px-5', 'py-2', 'chat-message', 'rounded-xl'];
+const message_classes = "mx-8 break-all chat-message bg-slate-600 rounded-xl w-fit max-w-screen rounded-xl px-5 py-4".split(" ");
+const username_css_classes = "text-gray-200 text-sm".split(" ");
 
 const create_message = (data: Message) => {
   let messageContainer = document.createElement('div');
   messageContainer.classList.add(...message_classes);
   let chatbox = document.querySelector('#chatbox');
+  let username = document.createElement('span');
+  username.classList.add(...username_css_classes);
+  username.innerText = `${data.name}`;
+  messageContainer.append(username);
   let message = document.createElement('p');
-  message.innerText = `${data.name}: ${data.message}`;
+  message.innerText = `${data.message}`;
   messageContainer.append(message);
   chatbox?.append(messageContainer);
   window.scrollTo(0, document.body.scrollHeight);

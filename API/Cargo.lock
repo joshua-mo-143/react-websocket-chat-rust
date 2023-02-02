@@ -36,9 +36,9 @@ checksum = "d468802bab17cbc0cc575e9b053f41e72aa36bfa6b7f55e3529ffa43161b97fa"
 
 [[package]]
 name = "axum"
-version = "0.6.2"
+version = "0.6.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1304eab461cf02bd70b083ed8273388f9724c549b316ba3d1e213ce0e9e7fb7e"
+checksum = "e5694b64066a2459918d8074c2ce0d5a88f409431994c2356617c8ae0c4721fc"
 dependencies = [
  "async-trait",
  "axum-core",
@@ -72,9 +72,9 @@ dependencies = [
 
 [[package]]
 name = "axum-core"
-version = "0.3.1"
+version = "0.3.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f487e40dc9daee24d8a1779df88522f159a54a980f99cfbe43db0be0bd3444a8"
+checksum = "1cae3e661676ffbacb30f1a824089a8c9150e71017f7e1e38f2aa32009188d34"
 dependencies = [
  "async-trait",
  "bytes",
@@ -760,8 +760,7 @@ checksum = "2a60c7ce501c71e03a9c9c0d35b861413ae925bd979cc7a4e30d060069aaac8d"
 [[package]]
 name = "mime_guess"
 version = "2.0.4"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "4192263c238a5f0d0c6bfd21f336a313a4ce1c450542449ca191bb657b4642ef"
+source = "git+https://github.com/NathanSWard/mime_guess.git?branch=platform-path-separators#053d56adb207cb774080668c8f97193957efb87a"
 dependencies = [
  "mime",
  "unicase",
@@ -1250,9 +1249,9 @@ dependencies = [
 
 [[package]]
 name = "shuttle-codegen"
-version = "0.8.0"
+version = "0.9.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "163c775942bf95dce6b663d3fcf4d2fedd3ef5c6c52feaaed6282de70a4ffaaa"
+checksum = "66ae5889c55fbd5aaa51b8ee5ed979c028d13ff5e092ec94b7dd5242150b0234"
 dependencies = [
  "proc-macro-error",
  "proc-macro2",
@@ -1262,9 +1261,9 @@ dependencies = [
 
 [[package]]
 name = "shuttle-common"
-version = "0.8.0"
+version = "0.9.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "9d08465a989de517720e435e70c7fc9f2edd286c0fd77688b7adf792dba99fce"
+checksum = "419c6ffbe9a898157eadfb436e25e102170c3105b0d8991a660e3272f7e1aa09"
 dependencies = [
  "chrono",
  "once_cell",
@@ -1277,9 +1276,9 @@ dependencies = [
 
 [[package]]
 name = "shuttle-secrets"
-version = "0.8.0"
+version = "0.9.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "91183fd726946a4bf5338cd5ebe92c2f6330414d437b5ea122302bcdb47e8fb4"
+checksum = "72fd463f83ca83a5b6b1aaa101aeecd91837e2537fc7b60c3b95cc9c0275acea"
 dependencies = [
  "async-trait",
  "shuttle-service",
@@ -1288,9 +1287,9 @@ dependencies = [
 
 [[package]]
 name = "shuttle-service"
-version = "0.8.0"
+version = "0.9.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ae790320daef991c63fe3e1fe85c6cc631ef7fcdaf5a8ffc8f5803197521d463"
+checksum = "ea92a1dbdf1be762ef60d923fff1a866d21df56427b94a617a9a0a75f60b7e16"
 dependencies = [
  "anyhow",
  "async-trait",
@@ -1303,6 +1302,7 @@ dependencies = [
  "serde_json",
  "shuttle-codegen",
  "shuttle-common",
+ "strfmt",
  "sync_wrapper",
  "thiserror",
  "tokio",
@@ -1313,9 +1313,9 @@ dependencies = [
 
 [[package]]
 name = "shuttle-static-folder"
-version = "0.8.0"
+version = "0.9.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7514bca7dca0ad4cdd181e9a4fb5c2c3402cde9a20516a750a272bca936ac577"
+checksum = "e1e866fdfa2d63033c0cf1bca9a27e98eb2c984eba9fe78a39d249fc7f9c9faf"
 dependencies = [
  "async-trait",
  "shuttle-service",
@@ -1355,6 +1355,12 @@ dependencies = [
  "libc",
  "winapi",
 ]
+
+[[package]]
+name = "strfmt"
+version = "0.2.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "b73de159e5e71c4c7579ea3041d3e765f46790555790c24489195554210f1fb4"
 
 [[package]]
 name = "strsim"

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Text+Me+One&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -15,19 +15,10 @@
 }
 
 body {
-  font-family: Roboto, 'Sans Serif';
+  font-family: 'Text Me One', 'Sans Serif';
   padding: 0;
   margin: 0;
   background-color: rgb(214 211 209);
   box-sizing: box-border;
   overflow-x: hidden;
 }
-
-.chat-message:nth-child(2) {
-  background: white;
-}
-
-.chat-message {
-  box-shadow: 5px 5px rgba(0,0,0,0.5);
-}
-
