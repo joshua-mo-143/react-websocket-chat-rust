@@ -58,11 +58,9 @@ const sendMessage = (e: React.FormEvent<HTMLFormElement>, name: string, message:
 }
 
 // Set up the websocket URL. 
-// const wsUri = ((window.location.protocol == "https:" && "wss://") || "ws://") +
-//   window.location.host +
-//   "/ws";
-
-const wsUri = "ws://localhost:9999/ws"
+const wsUri = ((window.location.protocol == "https:" && "wss://") || "ws://") +
+  window.location.host +
+  "/ws";
 
 const websocket = new WebSocket(wsUri);
 
