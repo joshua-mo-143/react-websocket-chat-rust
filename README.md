@@ -2,7 +2,9 @@
 This repo is intended to show an example of a websocket chat app created using React and Rust.
 
 ## Live Deployment
-todo!()
+Check out  the live deployment [here](https://websocket-chat-react-rust-example.shuttleapp.rs).
+
+![](./Screenshot.png)
 
 ## How To Use
 Run the following commands below:
