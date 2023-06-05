@@ -1,31 +1,25 @@
 // dependencies
-use std::{
-    sync::{Arc},
-    collections::HashMap, path::PathBuf
-};
 use axum::{
-    http::StatusCode,
     extract::{
         ws::{Message, WebSocket},
-        WebSocketUpgrade, Path,  
+        Path, WebSocketUpgrade,
     },
-
-    response::{IntoResponse},
-    routing::{get},
+    http::StatusCode,
+    response::IntoResponse,
+    routing::get,
     Extension, Router,
 };
+use std::{collections::HashMap, path::PathBuf, sync::Arc};
 
 use axum_extra::routing::SpaRouter;
 use futures::{SinkExt, StreamExt};
-use shuttle_secrets::SecretStore;
-use shuttle_service::ShuttleAxum;
-use sync_wrapper::SyncWrapper;
-use tokio::{
-    sync::{mpsc::{self, UnboundedSender, UnboundedReceiver}, RwLock},
-
-};
 use serde::{Deserialize, Serialize};
-use tower_http::{auth::RequireAuthorizationLayer};
+use shuttle_secrets::SecretStore;
+use tokio::sync::{
+    mpsc::{self, UnboundedReceiver, UnboundedSender},
+    RwLock,
+};
+use tower_http::auth::RequireAuthorizationLayer;
 
 // The list of users needs to be a hashmap that can be shared safely across threads, hence an Arc with RwLock
 type Users = Arc<RwLock<HashMap<usize, UnboundedSender<Message>>>>;
@@ -38,21 +32,18 @@ struct Msg {
     message: String,
 }
 
-
-#[shuttle_service::main]
-async fn main(
+#[shuttle_runtime::main]
+async fn axum(
     #[shuttle_secrets::Secrets] secrets: SecretStore,
-    #[shuttle_static_folder::StaticFolder] static_folder: PathBuf
-) -> ShuttleAxum {
-
+    #[shuttle_static_folder::StaticFolder] static_folder: PathBuf,
+) -> shuttle_axum::ShuttleAxum {
     // We use Secrets.toml to set the BEARER key, just like in a .env file and call it here
     let secret = secrets.get("BEARER").unwrap_or("Bear".to_string());
 
     // set up router with Secrets & use syncwrapper to make the web service work
     let router = router(secret, static_folder);
-    let sync_wrapper = SyncWrapper::new(router);
 
-    Ok(sync_wrapper)
+    Ok(router.into())
 }
 
 fn router(secret: String, static_folder: PathBuf) -> Router {
@@ -61,13 +52,12 @@ fn router(secret: String, static_folder: PathBuf) -> Router {
 
     // make an admin route for kicking users
     let admin = Router::new()
-    .route("/disconnect/:user_id", get(disconnect_user))
-    .layer(RequireAuthorizationLayer::bearer(&secret));
+        .route("/disconnect/:user_id", get(disconnect_user))
+        .layer(RequireAuthorizationLayer::bearer(&secret));
 
-    let static_assets = SpaRouter::new("/", static_folder)
-        .index_file("index.html");
+    let static_assets = SpaRouter::new("/", static_folder).index_file("index.html");
     // return a new router and nest the admin route into the websocket route
-     Router::new()
+    Router::new()
         .route("/ws", get(ws_handler))
         .nest("/admin", admin)
         .layer(Extension(users))
@@ -85,7 +75,8 @@ async fn handle_socket(stream: WebSocket, state: Users) {
     let (mut sender, mut receiver) = stream.split();
 
     // Create a new channel for async task management
-    let (tx, mut rx): (UnboundedSender<Message>, UnboundedReceiver<Message>) = mpsc::unbounded_channel();
+    let (tx, mut rx): (UnboundedSender<Message>, UnboundedReceiver<Message>) =
+        mpsc::unbounded_channel();
 
     // If a message has been received, send the message (expect on error)
     tokio::spawn(async move {
